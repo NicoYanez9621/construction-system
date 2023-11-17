@@ -8,13 +8,17 @@ import { MaterialModule } from '../material.module';
 import { AltaRemitoFormComponent } from './alta-remito-form/alta-remito-form.component';
 import { StockViewComponent } from './stock-view/stock-view.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AbmProveedoresComponent } from './abm-proveedores/abm-proveedores.component';
+import { AbmProductosComponent } from './abm-productos/abm-productos.component';
 
 
 @NgModule({
   declarations: [
     MainAppComponent,
     AltaRemitoFormComponent,
-    StockViewComponent
+    StockViewComponent,
+    AbmProveedoresComponent,
+    AbmProductosComponent
   ],
   imports: [
     CommonModule,

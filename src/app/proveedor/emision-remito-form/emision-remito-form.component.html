@@ -1,7 +1,8 @@
+<p class="fs-5 p-4 border-bottom">Crear remito + QR</p>
 <div class="d-flex p-4 border-bottom justify-content-between align-items-center">
-  <span class="fs-5">Crear remito + QR</span>
+  <span class="fs-5">Carga de remito</span>
   <button mat-fab color="primary" (click)="scanQR()" aria-label="QR scanner icon">
-    <mat-icon>print</mat-icon>
+    <mat-icon>qr_code_scanner</mat-icon>
   </button>
 </div>
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
@@ -9,7 +10,7 @@
   <span class="fs-6 mt-3 mb-3">Cabecera</span>
   <div class="d-flex justity-content-between flex-wrap gap-4 align-items-center">
     <mat-form-field class="example-full-width">
-      <mat-label>Cliente</mat-label>
+      <mat-label>Proveedor</mat-label>
       <input type="text"
              placeholder="Seleccione un proveedor"
              aria-label="Number"
@@ -21,14 +22,14 @@
       </mat-autocomplete>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Fecha emision remito</mat-label>
+      <mat-label>Fecha remito</mat-label>
       <input matInput formControlName="fecha" [matDatepicker]="picker">
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>CUIT cliente</mat-label>
+      <mat-label>CUIT</mat-label>
       <input formControlName="cuitProveedor" matInput>
     </mat-form-field>
     <mat-form-field>

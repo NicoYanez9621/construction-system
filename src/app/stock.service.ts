@@ -83,6 +83,11 @@ export class StockService {
     });
   }
 
+  nuevoProducto(body: any) {
+    const endpoint = `${this.BASE_URL}/productos`;
+    return this._httpClient.post(endpoint, body);
+  }
+
 
 }
 
