@@ -88,6 +88,11 @@ export class StockService {
     return this._httpClient.post(endpoint, body);
   }
 
+  nuevoProveedor(body: any) {
+    const endpoint = `${this.BASE_URL}/proveedores`;
+    return this._httpClient.post(endpoint, body);
+  }
+
 
 }
 
