@@ -90,6 +90,13 @@ export class AltaRemitoFormComponent implements OnInit {
     this.form.controls.descripcion.setValue(this.productoSeleccionado?.descripcion || null);
   }
 
+  proveedorSeleccionadoFn(event: any) {
+    const proveedorId = event.option.value
+    const result = this._proveedores.find((p) => p.id === proveedorId) || null;
+    this.form.controls.cuitProveedor.setValue(result?.cuit || null);
+    this.form.controls.telefono.setValue(result?.telefono || null);
+  }
+
   displayFnProd(i: Item): string {
     return i && i.descripcion ? i.descripcion : '';
   }

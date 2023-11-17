@@ -62,4 +62,10 @@ export class AbmProductosComponent implements OnInit, AfterViewInit {
 
     this.snackBar.open('Producto creado', 'OK', { duration: 3000 });
   }
+
+  refresh(){
+    this.loading = true;
+    this.stockService.getProductos();
+    this.loading = false;
+  }
 }

@@ -6,17 +6,17 @@
 </div>
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <form class="container-fluid d-flex flex-column mt-3" [formGroup]="form">
-  <span class="fs-6 mt-3 mb-3">Cabecera</span>
+  <span class="fs-6 mt-3 mb-3">Proveedor</span>
   <div class="d-flex justity-content-between flex-wrap gap-4 align-items-center">
     <mat-form-field class="example-full-width">
-      <mat-label>Proveedor</mat-label>
+      <mat-label>Cod Proveedor</mat-label>
       <input type="text"
              placeholder="Seleccione un proveedor"
              aria-label="Number"
              matInput
              formControlName="proveedor"
              [matAutocomplete]="autoProveedor">
-      <mat-autocomplete #autoProveedor="matAutocomplete">
+      <mat-autocomplete #autoProveedor="matAutocomplete" (optionSelected)="proveedorSeleccionadoFn($event)">
           <mat-option *ngFor="let proveedor of proveedores$ | async" [value]="proveedor.id">{{proveedor.nombre}}</mat-option>
       </mat-autocomplete>
     </mat-form-field>
@@ -29,11 +29,11 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>CUIT</mat-label>
-      <input formControlName="cuitProveedor" matInput>
+      <input formControlName="cuitProveedor" matInput readonly>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Telefono</mat-label>
-      <input formControlName="telefono" matInput>
+      <input formControlName="telefono" matInput readonly>
     </mat-form-field>
   </div>
   <span class="fs-6">Items / Descripcion</span>

@@ -1,6 +1,6 @@
 <div class="d-flex p-4 border-bottom justify-content-between align-items-center">
   <span class="fs-5">Proveedores</span>
-  <button mat-fab color="primary" aria-label="QR scanner icon" [disabled]="loading">
+  <button mat-fab color="primary" aria-label="QR scanner icon" (click)="refresh()" [disabled]="loading">
     <mat-icon>add_business</mat-icon>
   </button>
 </div>

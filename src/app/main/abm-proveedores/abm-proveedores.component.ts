@@ -55,4 +55,10 @@ export class AbmProveedoresComponent {
     });
   }
 
+  refresh(){
+    this.loading = true;
+    this.stockService.getProveedores();
+    this.loading = false;
+  }
+
 }
