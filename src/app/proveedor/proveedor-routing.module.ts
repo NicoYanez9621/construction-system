@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: '', component: ProveedorAppComponent ,
   children: [
     { path: 'crear-remito', component: EmisionRemitoFormComponent },
+    { path: '', redirectTo: '/crear-remito', pathMatch: 'full' },
   ]},
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

@@ -13,9 +13,10 @@ const routes: Routes = [
       { path: 'proveedores', component: AbmProveedoresComponent },
       { path: 'productos', component: AbmProductosComponent },
       { path: 'stock', component: StockViewComponent },
+      { path: '', redirectTo: '/alta-remito', pathMatch: 'full' },
     ],
   },
-  { path: '**', redirectTo: '/alta-remito', pathMatch: 'full' },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

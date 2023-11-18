@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
@@ -119,10 +119,16 @@ export class AltaRemitoFormComponent implements OnInit {
     this.dataSource.data = items;
     this.itemsCargados = items;
     this.form.controls.id.setValue('');
+    this.form.controls.id.setErrors(null)
     this.form.controls.cantidad.setValue('');
+    this.form.controls.cantidad.setErrors(null)
     this.form.controls.unidad.setValue('');
+    this.form.controls.unidad.setErrors(null)
     this.form.controls.descripcion.setValue('');
+    this.form.controls.descripcion.setErrors(null)
+    clearFieldAndErrors(['id', 'cantidad', 'unidad', 'descripcion'], this.form);
   }
+
 
   guardarRemito() {
     if(!this.form.controls.proveedor?.value || !this.form.controls.fecha?.value || !this.form.controls.cuitProveedor?.value || !this.form.controls.telefono?.value){
@@ -170,4 +176,12 @@ export class AltaRemitoFormComponent implements OnInit {
     this.form.reset();
   }
 
+}
+
+
+export const clearFieldAndErrors = (keys: string[], form: FormGroup) => {
+  keys.forEach((key) => {
+    form.controls[key].setValue('');
+    form.controls[key].setErrors(null);
+  });
 }
