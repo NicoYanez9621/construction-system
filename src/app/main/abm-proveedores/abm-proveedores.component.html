@@ -7,7 +7,7 @@
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <form class="container-fluid d-flex flex-column mt-3" [formGroup]="form">
   <span class="fs-6 mt-3 mb-3">Nuevo proveedor</span>
-  <div class="d-flex flex-wrap gap-4 justify-content-start align-items-center">
+  <div class="d-flex flex-wrap gap-4 justify-content-start align-items-start">
     <mat-form-field>
       <mat-label>Nombre</mat-label>
       <input formControlName="nombre" matInput>
@@ -28,7 +28,7 @@
       <mat-label>Telefono</mat-label>
       <input formControlName="telefono" matInput>
     </mat-form-field>
-    <button mat-icon-button color="primary" class="border" (click)="nuevoProveedor()" aria-label="Add icon">
+    <button mat-icon-button color="primary" class="border mt-1" (click)="nuevoProveedor()" aria-label="Add icon">
       <mat-icon>add</mat-icon>
     </button>
   </div>
