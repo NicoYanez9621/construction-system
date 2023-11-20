@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { RemitoAlCliente } from './proveedor.service';
 
 export interface Remito {
   proveedorId?:  number;
@@ -53,6 +54,9 @@ export class StockService {
   productosSubjet = new BehaviorSubject<Producto[]>([] as Producto[]);
   productos$ = this.productosSubjet.asObservable();
 
+  remitoQRProveedor = new BehaviorSubject<RemitoAlCliente>({} as RemitoAlCliente);
+  remitoQRProveedor$ = this.remitoQRProveedor.asObservable();
+
   BASE_URL = 'https://servicetickets.onrender.com/api/empresa';
   constructor(private _httpClient: HttpClient) {
     this.getProveedores();
@@ -91,6 +95,20 @@ export class StockService {
   nuevoProveedor(body: any) {
     const endpoint = `${this.BASE_URL}/proveedores`;
     return this._httpClient.post(endpoint, body);
+  }
+
+  getRemitoFromQRProveedor(QRString: string): boolean {
+    const remito = JSON.parse(QRString);
+    if(remito){
+      this.remitoQRProveedor.next(remito);
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  resetRemitoQRProveedor(){
+    this.remitoQRProveedor.next({} as RemitoAlCliente);
   }
 
 

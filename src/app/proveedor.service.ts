@@ -6,6 +6,7 @@ export interface RemitoAlCliente {
   fechaEmision: Date;
   createdAt:    Date;
   updatedAt:    Date;
+  cuitEmisor: string;
   productos:    Producto[];
   cliente:      Cliente;
 }
