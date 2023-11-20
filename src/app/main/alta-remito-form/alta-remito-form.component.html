@@ -11,12 +11,8 @@
     <mat-icon>qr_code_scanner</mat-icon>
   </button>
 </div>
-<div class="border position-relative" style="width: 10px; height: 10px">
-  <video class="d-none" #videoElement></video>
-  <canvas class="w100 h100" #canvasElement></canvas>
-  <div *ngIf="scannedCode">Código QR escaneado: {{ scannedCode }}</div>
-</div>
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+<!-- <p> {{ remitoQRProveedor | json }} </p> -->
 <form class="container-fluid d-flex flex-column mt-3" [formGroup]="form">
   <span class="fs-6 mt-3 mb-3">Proveedor</span>
   <div

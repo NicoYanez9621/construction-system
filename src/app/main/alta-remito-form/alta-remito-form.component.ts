@@ -1,3 +1,4 @@
+import { MatDialog } from '@angular/material/dialog';
 import {
   AfterViewInit,
   Component,
@@ -12,6 +13,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable, map, startWith } from 'rxjs';
 import { Item, Producto, Proveedor, StockService } from 'src/app/stock.service';
 import jsQR from 'jsqr';
+import { RemitoQrReaderDialogComponent } from '../remito-qr-reader-dialog/remito-qr-reader-dialog.component';
+import { RemitoAlCliente } from 'src/app/proveedor.service';
 
 @Component({
   selector: 'app-alta-remito-form',
@@ -35,20 +38,18 @@ export class AltaRemitoFormComponent implements OnInit, AfterViewInit {
   unidades: string[] = ['Kg', 'Ltr', 'U', 'Mts'];
   itemsCargados: Item[] = [];
   loading: boolean = false;
+  remitoQRProveedor$!: Observable<RemitoAlCliente>;
+  remitoQRProveedor!: RemitoAlCliente;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild('videoElement', { static: false }) videoElement!: ElementRef;
-  @ViewChild('canvasElement', { static: false }) canvasElement!: ElementRef;
-  scannedCode!: string;
-  video!: HTMLVideoElement;
-  canvas!: HTMLCanvasElement;
-  canvasContext!: CanvasRenderingContext2D | null;
   constructor(
     private fb: FormBuilder,
     private stockService: StockService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     this.proveedores$ = this.stockService.proveedores$;
     this.productos$ = this.stockService.productos$;
+    this.remitoQRProveedor$ = this.stockService.remitoQRProveedor$;
   }
 
   form = this.fb.group({
@@ -68,50 +69,6 @@ export class AltaRemitoFormComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.data = [];
-    this.video = this.videoElement.nativeElement;
-    this.canvas = this.canvasElement.nativeElement;
-    this.canvasContext = this.canvas.getContext('2d');
-    this.initCamera();
-  }
-
-  initCamera(): void {
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        this.video.srcObject = stream;
-        this.video.play();
-
-        this.scanQRCode();
-      })
-      .catch((error) => console.error('Error al acceder a la cámara:', error));
-  }
-
-  scanQRCode(): void {
-    requestAnimationFrame(() => this.scanQRCode());
-
-    this.canvas.width = this.video.videoWidth;
-    this.canvas.height = this.video.videoHeight;
-    if (this.canvasContext) {
-      this.canvasContext?.drawImage(
-        this.video,
-        0,
-        0,
-        this.canvas.width,
-        this.canvas.height
-      );
-      const imageData = this.canvasContext?.getImageData(
-        0,
-        0,
-        this.canvas.width,
-        this.canvas.height
-      );
-      const code = jsQR(imageData.data, imageData.width, imageData.height, {
-        inversionAttempts: 'dontInvert',
-      });
-      if (code) {
-        this.scannedCode = code.data;
-      }
-    }
   }
 
   ngOnInit() {
@@ -133,6 +90,41 @@ export class AltaRemitoFormComponent implements OnInit, AfterViewInit {
       })
     );
 
+    this.remitoQRProveedor$.subscribe((remito) => {
+      if (remito) {
+        this.remitoQRProveedor = remito;
+        // proveedor: ['', Validators.required],
+        // fecha: ['', Validators.required],
+        // cuitProveedor: ['', Validators.required],
+        // telefono: ['', Validators.required],
+        const proveedor = this._proveedores.find(
+          (p) => p.cuit === remito.cuitEmisor
+        );
+        if(proveedor){
+          this.dataSource.data = [];
+          const result = this._proveedores.find((p) => p.cuit === remito.cuitEmisor) || null;
+          this.form.controls.cuitProveedor.setValue(result?.cuit || null);
+          this.form.controls.telefono.setValue(result?.telefono || null);
+
+          this.form.controls.proveedor.setValue((proveedor.id)?.toString() || null);
+          const fecha = new Date(remito.fechaEmision).toDateString();
+          this.form.controls.fecha.setValue(fecha || null);
+
+          this.itemsCargados = remito.productos.map((p) => {
+            return {
+              // id: p.id,
+              cantidad: p.item?.cantidad,
+              unidad: p.item?.unidad,
+              descripcion: p.descripcion,
+            };
+          });
+          this.dataSource.data = this.itemsCargados;
+        }
+        // this.itemsCargados = remito.items;
+        // this.dataSource.data = remito.items;
+      }
+    });
+
     this.productosFiltrados = this.form.controls.id.valueChanges.pipe(
       startWith(''),
       map((value) => {
@@ -143,6 +135,10 @@ export class AltaRemitoFormComponent implements OnInit, AfterViewInit {
         return filtered;
       })
     );
+
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.snackBar.open('Remito leído correctamente', 'Cerrar', { duration: 3000 });
+    });
   }
 
   productoSeleccionadoFn(event: any) {
@@ -254,7 +250,10 @@ export class AltaRemitoFormComponent implements OnInit, AfterViewInit {
   }
 
   scanQR() {
-    this.snackBar.open('Escaneando QR', 'Cerrar', { duration: 3000 });
+    this.dialog.open(RemitoQrReaderDialogComponent, {
+      width: '50vw',
+      height: '35vw',
+    });
   }
 
   limpiarForm() {

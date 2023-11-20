@@ -10,6 +10,7 @@ import { StockViewComponent } from './stock-view/stock-view.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AbmProveedoresComponent } from './abm-proveedores/abm-proveedores.component';
 import { AbmProductosComponent } from './abm-productos/abm-productos.component';
+import { RemitoQrReaderDialogComponent } from './remito-qr-reader-dialog/remito-qr-reader-dialog.component';
 
 
 
@@ -19,7 +20,8 @@ import { AbmProductosComponent } from './abm-productos/abm-productos.component';
     AltaRemitoFormComponent,
     StockViewComponent,
     AbmProveedoresComponent,
-    AbmProductosComponent
+    AbmProductosComponent,
+    RemitoQrReaderDialogComponent
   ],
   imports: [
     CommonModule,
