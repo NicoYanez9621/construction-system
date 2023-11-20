@@ -12,6 +12,7 @@ import { AbmProveedoresComponent } from './abm-proveedores/abm-proveedores.compo
 import { AbmProductosComponent } from './abm-productos/abm-productos.component';
 
 
+
 @NgModule({
   declarations: [
     MainAppComponent,
@@ -26,7 +27,7 @@ import { AbmProductosComponent } from './abm-productos/abm-productos.component';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
   ],
 })
 export class MainModule { }

@@ -53,7 +53,7 @@ export class StockService {
   productosSubjet = new BehaviorSubject<Producto[]>([] as Producto[]);
   productos$ = this.productosSubjet.asObservable();
 
-  BASE_URL = 'https://servicetickets.onrender.com/api';
+  BASE_URL = 'https://servicetickets.onrender.com/api/empresa';
   constructor(private _httpClient: HttpClient) {
     this.getProveedores();
     this.getProductos();

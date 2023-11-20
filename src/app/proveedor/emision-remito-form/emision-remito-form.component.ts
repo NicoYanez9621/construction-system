@@ -29,6 +29,8 @@ export class EmisionRemitoFormComponent implements OnInit {
   unidades: string[] = ['Kg', 'Ltr', 'U', 'Mts'];
   itemsCargados: Item[] = [];
   loading: boolean = false;
+  showQR: boolean = false;
+  QRText: string = '';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(private fb: FormBuilder, private stockService: StockService, private snackBar: MatSnackBar) {
     this.proveedores$ = this.stockService.proveedores$;
@@ -140,23 +142,26 @@ export class EmisionRemitoFormComponent implements OnInit {
       })
      };
 
-     this.stockService.guardarRemito(body).subscribe((res) => {
-        this.snackBar.open('Remito guardado', 'Cerrar', {duration: 3000});
-        this.limpiarForm();
-        this.loading = false;
-        this.dataSource.data = [];
-        this.itemsCargados = [];
-        this.form.reset();
-      }, (err) => {
-        this.loading = false;
-        console.log(err)
-        this.snackBar.open('Error al guardar remito', 'Cerrar', {duration: 3000});
-      })
+    this.QRText = JSON.stringify(body);
+    this.showQR = true;
+
+    //  this.stockService.guardarRemito(body).subscribe((res) => {
+    //     this.snackBar.open('Remito guardado', 'Cerrar', {duration: 3000});
+    //     this.limpiarForm();
+    //     this.loading = false;
+    //     this.dataSource.data = [];
+    //     this.itemsCargados = [];
+    //     this.form.reset();
+    //   }, (err) => {
+    //     this.loading = false;
+    //     console.log(err)
+    //     this.snackBar.open('Error al guardar remito', 'Cerrar', {duration: 3000});
+    //   })
   }
 
-  scanQR() {
+  generarQR() {
     this.snackBar.open('Escaneando QR', 'Cerrar', {duration: 3000});
-
+    this.showQR = true;
   }
 
   limpiarForm(){

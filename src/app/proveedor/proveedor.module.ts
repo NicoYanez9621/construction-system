@@ -7,12 +7,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
 import { EmisionRemitoFormComponent } from './emision-remito-form/emision-remito-form.component';
 import { HttpClientModule } from '@angular/common/http';
+import { QRCodeModule } from 'angularx-qrcode';
+import { ListRemitosComponent } from './listremitos/listremitos.component';
+import { RemitoQrDialogComponent } from './remito-qr-dialog/remito-qr-dialog.component';
 
 
 @NgModule({
   declarations: [
     ProveedorAppComponent,
-    EmisionRemitoFormComponent
+    EmisionRemitoFormComponent,
+    ListRemitosComponent,
+    RemitoQrDialogComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    QRCodeModule
   ]
 })
 export class ProveedorModule { }
