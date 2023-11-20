@@ -1,0 +1,47 @@
+<div>
+  <!-- <div>
+    <mat-form-field>
+      <mat-label> Buscar </mat-label>
+      <input matInput [formControl]="searchInput" placeholder="Buscar...">
+    </mat-form-field>
+  </div> -->
+  <div class="d-flex p-4 border-bottom justify-content-between align-items-center">
+    <span class="fs-5">Remitos emitidos</span>
+    <button mat-fab color="primary" (click)="getRemitos()" aria-label="loader">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="qr">
+      <th mat-header-cell *matHeaderCellDef> QR </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button class="border border-0 mat-elevation-z0" color="primary" (click)="generateQR(element)" aria-label="loader">
+        <mat-icon class="border border-0 mat-elevation-z0">qr_code</mat-icon>
+      </button>
+     </td>
+    </ng-container>
+    <ng-container matColumnDef="fechaEmision">
+      <th mat-header-cell *matHeaderCellDef> Fecha Emision </th>
+      <td mat-cell *matCellDef="let element"> {{element.fechaEmision | date: 'dd/MM/yyyy'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef> Cliente </th>
+      <td mat-cell *matCellDef="let element"> {{element.cliente.nombre}} </td>
+    </ng-container>
+    <ng-container matColumnDef="cuit">
+      <th mat-header-cell *matHeaderCellDef> CUIT </th>
+      <td mat-cell *matCellDef="let element"> {{element.cliente.cuit}} </td>
+    </ng-container>
+    <ng-container matColumnDef="mail">
+      <th mat-header-cell *matHeaderCellDef> Mail </th>
+      <td mat-cell *matCellDef="let element"> {{element.cliente.mail}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>

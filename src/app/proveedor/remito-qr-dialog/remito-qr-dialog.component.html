@@ -1,0 +1,9 @@
+<div class="pb-3">
+  <div class="d-flex p-4 border-bottom justify-content-between align-items-center">
+    <span class="fs-5">Remito empresa '{{data.remito.cliente.nombre}}'</span>
+  </div>
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <div class="d-flex justify-content-center align-items-center">
+    <qrcode [qrdata]="QRText" [width]="256" [errorCorrectionLevel]="'M'" [allowEmptyString]="true"></qrcode>
+  </div>
+</div>
